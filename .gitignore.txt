@@ -1,4 +1,4 @@
-/node_modules
-package-lock.json
-db.sqlite
+api/node_modules
+api/package-lock.json
+api/db.sqlite
 
