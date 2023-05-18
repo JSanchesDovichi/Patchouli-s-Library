@@ -32,7 +32,7 @@ router.post('/profile', passport.authenticate('jwt', { session: false }),
 );
 */
 
-const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');// import passport and passport-jwt modules
 const passport = require('passport');
 const passportJWT = require('passport-jwt');// ExtractJwt to help extract the token
@@ -59,7 +59,7 @@ passport.use(strategy);
 
 router.use(passport.initialize());
 
-router.post('/login', async function (req, res, next) {
+router.post('/login', async function (req, res) {
     const { email, senha } = req.body;
     if (email && senha) {
         // we get the user with the name and save the resolved promise returned
@@ -79,6 +79,9 @@ router.post('/login', async function (req, res, next) {
         } else {
             res.status(401).json({ msg: 'Password is incorrect' });
         }
+    } else 
+    {
+        res.sendStatus(400)
     }
 });
 

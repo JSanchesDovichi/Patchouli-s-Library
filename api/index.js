@@ -1,10 +1,12 @@
 const express = require('express')
+var cors = require('cors')
 const app = express()
 const port = 3000
 
 const db = require('./database.js')
 
 app.use(express.urlencoded({ extended: true }));
+app.use(cors())
 
 //db.sequelize.sync({ force: true })
 
