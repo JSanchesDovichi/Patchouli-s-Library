@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  go_router: ^7.0.1
   logger: ^1.3.0
   dio: ^5.1.2
 

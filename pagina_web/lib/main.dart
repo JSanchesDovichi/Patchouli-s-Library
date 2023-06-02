@@ -1,8 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:pagina_web/test_requests.dart';
+import 'package:go_router/go_router.dart';
 
 void main() {
-  runApp(const MyApp());
+  //runApp(const MyApp());
+
+  // GoRouter configuration
+  final _router = GoRouter(
+    routes: [
+      GoRoute(
+        path: '/',
+        builder: (context, state) => FilledButton(
+            onPressed: () => context.go('/DebugToolbox'),
+            child: Text("Acessar toolbox de testes!")),
+      ),
+      GoRoute(
+        path: '/DebugToolbox',
+        builder: (context, state) => MyApp(),
+      ),
+    ],
+  );
+
+  runApp(MaterialApp.router(
+    routerConfig: _router,
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -12,7 +33,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: "Patchouli's Library Debug Toolbox",
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -29,10 +50,14 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple.shade800),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(
+          title: Text(
+        "Patchouli's Library Debug Toolbox",
+        textAlign: TextAlign.center,
+      )),
     );
   }
 }
@@ -49,7 +74,7 @@ class MyHomePage extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-  final String title;
+  final Widget title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -85,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Center(child: widget.title),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -106,6 +131,8 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text("Debug:"),
+            Divider(),
             const Text(
               'You have pushed the button this many times:',
             ),
@@ -113,26 +140,34 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            ElevatedButton(
+            FilledButton(
                 onPressed: () {
                   getHttp();
                 },
                 child: Text("Tentar chamar a API")),
-            ElevatedButton(
+            Text("Autenticação:"),
+            Divider(),
+            FilledButton(
                 onPressed: () {
                   areaProibida();
                 },
                 child: Text("Tentar acessar página proibida")),
-            ElevatedButton(
+            FilledButton(
                 onPressed: () {
                   criarUsuario();
                 },
                 child: Text("Criar usuário teste")),
-            ElevatedButton(
+            FilledButton(
                 onPressed: () {
                   tryLogin();
                 },
-                child: Text("Executar Login"))
+                child: Text("Executar Login")),
+            FilledButton(
+                onPressed: () {
+                  logout();
+                },
+                child: Text("Logout")),
+            Divider(),
           ],
         ),
       ),

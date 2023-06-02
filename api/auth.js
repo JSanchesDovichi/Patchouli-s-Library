@@ -65,7 +65,7 @@ router.post('/login', async function (req, res) {
         // we get the user with the name and save the resolved promise returned
         user = await Usuarios.findOne({ where: { email: email } });
         if (!user) {
-            res.status(401).json({ msg: 'No such user found', user });
+            res.status(404).json({ msg: 'No such user found', user });
             return
         }
 

@@ -59,8 +59,8 @@ void tryLogin() async {
     Options opcoes = Options(contentType: Headers.formUrlEncodedContentType);
 
     Map<String, dynamic> formData = {
-      'email': 'jsanches@email',
-      'senha': 'senha_teste'
+      'email': 'email_teste@gmail.com',
+      'senha': '12345'
     };
 
     Response resposta =
@@ -77,4 +77,8 @@ void tryLogin() async {
   } on DioError catch (e) {
     Resources.logger.e("$e");
   }
+}
+
+void logout() {
+  Resources.authKey = null;
 }

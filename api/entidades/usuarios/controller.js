@@ -2,31 +2,40 @@
 const Usuarios = require("./model")
 
 exports.create = (req, res) => {
-    Usuarios.create({
-        email : req.body.email,
-        senha : req.body.senha
-    }).then((user) => {
-        res.send(user)
-    })
+    if (req.body.email == null || req.body.senha == null) {
+        res.status(400).send('Dados de cadastro inválidos!')
+    } else {
+
+        Usuarios.create({
+            email: req.body.email,
+            senha: req.body.senha
+        }).then((user) => {
+            res.send("Usuário criado com sucesso!")
+        })
+    }
 }
 
 exports.findAll = (req, res) => {
-    Usuarios.findAll().then( users => {
+    Usuarios.findAll().then(users => {
         res.send(users)
     })
 }
 
 exports.update = (req, res) => {
-    Usuarios.update({
-        email: "emailalterado@gmail.com",
-        senha: "12345"
-    },
-    {
-        where: {
-            id: req.params.id
-        }
+    if (req.body.email == null || req.body.senha == null) {
+        res.status(400).send('Dados de atualização inválidos!')
     }
-    ).then (
+
+    Usuarios.update({
+        email: req.body.email,
+        senha: req.body.senha
+    },
+        {
+            where: {
+                id: req.params.id
+            }
+        }
+    ).then(
         (ok) => {
             res.send("Atualizado com sucesso!")
         },
@@ -43,7 +52,7 @@ exports.delete = (req, res) => {
                 id: req.params.id
             }
         }
-    ).then (
+    ).then(
         (ok) => {
             res.send("Apagado com sucesso!")
         },
