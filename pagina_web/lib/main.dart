@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pagina_web/placeholder_content.dart';
 import 'package:pagina_web/test_requests.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,6 +18,10 @@ void main() {
       GoRoute(
         path: '/DebugToolbox',
         builder: (context, state) => MyApp(),
+      ),
+      GoRoute(
+        path: '/placeholder_content',
+        builder: (context, state) => PlaceholderContentPage(),
       ),
     ],
   );
@@ -168,6 +173,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 child: Text("Logout")),
             Divider(),
+            FilledButton(
+                onPressed: () {
+                  //logout();
+                  context.go('/placeholder_content');
+                },
+                child: Text("Acessar conteúdo placeholder")),
           ],
         ),
       ),

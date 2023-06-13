@@ -32,6 +32,18 @@ app.get('/conn_test', async (req, res) => {
   }
 });
 
+app.use(express.static('assets/'))
+
+/*
+app.get('/test_file', (req, res) => {
+  res.sendFile("/home/workstation/Projetos/dweb2/Patchoulis_Library/api/assets/placeholder_page.jpg")
+});
+
+app.get('/test_file_template', (req, res) => {
+  res.sendFile("/home/workstation/Projetos/dweb2/Patchoulis_Library/api/assets/placeholder_page_template.png")
+});
+*/
+
 /*
 app.get('/test_file', (req, res) => {
   res.sendFile("/home/workstation/Projetos/dweb2/Patchoulis_Library/assets/pages/onepiece1.jpg")

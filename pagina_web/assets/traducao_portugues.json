@@ -1,0 +1,37 @@
+[
+    {
+        "position": {
+            "top": 990,
+            "left": 500
+        },
+        "dialogue": "Sozinho ele veleja!"
+    },
+    {
+        "position": {
+            "top": 675,
+            "left": 65
+        },
+        "dialogue": "Ser o rei\ndos piratas!!"
+    },
+    {
+        "position": {
+            "top": 400,
+            "left": 585
+        },
+        "dialogue": "Eu \nvou..."
+    },
+    {
+        "position": {
+            "top": 150,
+            "left": 60
+        },
+        "dialogue": "Beleza,\nvamos nessa!!"
+    },
+    {
+        "position": {
+            "top": 985,
+            "left": 75
+        },
+        "dialogue": "Uma longa\njornada começou!"
+    }
+]
