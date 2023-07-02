@@ -4,117 +4,26 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class PlaceholderContentPage extends StatefulWidget {
-  const PlaceholderContentPage({super.key});
+class PlaceholderContentPageLocal extends StatefulWidget {
+  const PlaceholderContentPageLocal({super.key});
 
   @override
-  State<PlaceholderContentPage> createState() => _PlaceholderContentPageState();
+  State<PlaceholderContentPageLocal> createState() =>
+      _PlaceholderContentPageLocalState();
 }
 
-/*
-Future<Map<String, dynamic>> traducaoIngles() async {
-  final String response = await rootBundle.loadString('traducao_ingles.json');
-  final Map<String, dynamic> data = await json.decode(response);
+class _PlaceholderContentPageLocalState
+    extends State<PlaceholderContentPageLocal> {
+  List<DropdownMenuItem<String>> linguas_disponiveis = [
+    DropdownMenuItem(
+      child: Text("portugues"),
+      value: "portugues",
+    ),
+    DropdownMenuItem(child: Text("ingles"), value: "ingles"),
+  ];
 
-  return data;
-  /*
-    setState(() {
-      _items = data["items"];
-    });
-    */
-}
+  String lingua_selecionada = "portugues";
 
-Future<Map<String, dynamic>> traducaoPortugues() async {
-  final String response =
-      await rootBundle.loadString('traducao_portugues.json');
-  final Map<String, dynamic> data = await json.decode(response);
-
-  return data;
-  /*
-    setState(() {
-      _items = data["items"];
-    });
-    */
-}
-
-Widget criarTraducao() {
-  return FutureBuilder(
-    future: traducaoPortugues(),
-    builder: (context, snapshot) {
-      if (snapshot.hasError) {
-        return Text("Erro!");
-      }
-
-      if (snapshot.connectionState == ConnectionState.done) {
-        //return snapshot.data
-        if (snapshot.hasData) {
-          print(snapshot.data!.values);
-        }
-      }
-
-      return LinearProgressIndicator();
-    },
-  );
-}
-*/
-
-List<Widget> traducaoIngles = [
-  Positioned(
-    top: 990,
-    left: 500,
-    child: Text("Without any\nfriends, he\n set sail on\n a little boat."),
-  ),
-  Positioned(
-    top: 675,
-    left: 50,
-    child: Text("The\nking\nof\npirates!!!!"),
-  ),
-  Positioned(
-    top: 400,
-    left: 575,
-    child: Text("I'll\nbecome"),
-  ),
-  Positioned(
-    top: 150,
-    left: 50,
-    child: Text("Alright,\nlet's go!!!"),
-  ),
-  Positioned(
-    top: 975,
-    left: 75,
-    child: Text("A long\njourney\nhas begun!!!"),
-  ),
-];
-
-List<Widget> traducaoPortugues = [
-  Positioned(
-    top: 150,
-    left: 50,
-    child: Text("Beleza,\nvamos nessa!!"),
-  ),
-  Positioned(
-    top: 400,
-    left: 575,
-    child: Text("Eu \nvou..."),
-  ),
-  Positioned(
-    top: 675,
-    left: 50,
-    child: Text("Ser o rei\ndos piratas!!"),
-  ),
-  Positioned(
-    top: 975,
-    left: 75,
-    child: Text("Uma longa\njornada começou!"),
-  ),
-  Positioned(
-    top: 990,
-    left: 500,
-    child: Text("Sozinho ele veleja!"),
-  ),
-];
-
-class _PlaceholderContentPageState extends State<PlaceholderContentPage> {
   bool templateEnabled = true;
   bool lingua = false;
 
@@ -124,11 +33,7 @@ class _PlaceholderContentPageState extends State<PlaceholderContentPage> {
   Future<void> readJson() async {
     String response;
 
-    if (lingua) {
-      response = await rootBundle.loadString('traducao_portugues.json');
-    } else {
-      response = await rootBundle.loadString('traducao_ingles.json');
-    }
+    response = await rootBundle.loadString('traducao_$lingua_selecionada.json');
 
     final data = await json.decode(response);
     setState(() {
@@ -188,6 +93,15 @@ class _PlaceholderContentPageState extends State<PlaceholderContentPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text("Alterar língua da tradução: "),
+                            DropdownButton(
+                                value: lingua_selecionada,
+                                items: linguas_disponiveis,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    lingua_selecionada = newValue!;
+                                  });
+                                })
+                            /*
                             Switch(
                               value: lingua,
                               onChanged: (bool newValue) {
@@ -196,6 +110,7 @@ class _PlaceholderContentPageState extends State<PlaceholderContentPage> {
                                 });
                               },
                             ),
+                            */
                           ],
                         )
                       : Column(),

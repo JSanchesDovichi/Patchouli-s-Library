@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pagina_web/placeholder_content.dart';
+import 'package:pagina_web/editor.dart';
+import 'package:pagina_web/editor2.dart';
+import 'package:pagina_web/placeholder_content_local.dart';
 import 'package:pagina_web/test_requests.dart';
 import 'package:go_router/go_router.dart';
 
@@ -20,8 +22,12 @@ void main() {
         builder: (context, state) => MyApp(),
       ),
       GoRoute(
-        path: '/placeholder_content',
-        builder: (context, state) => PlaceholderContentPage(),
+        path: '/placeholder_content_local',
+        builder: (context, state) => PlaceholderContentPageLocal(),
+      ),
+      GoRoute(
+        path: '/debug_editor',
+        builder: (context, state) => Editor2(),
       ),
     ],
   );
@@ -176,9 +182,15 @@ class _MyHomePageState extends State<MyHomePage> {
             FilledButton(
                 onPressed: () {
                   //logout();
-                  context.go('/placeholder_content');
+                  context.go('/placeholder_content_local');
                 },
                 child: Text("Acessar conteúdo placeholder")),
+            FilledButton(
+                onPressed: () {
+                  //logout();
+                  context.go('/debug_editor');
+                },
+                child: Text("Acessar editor (debug)")),
           ],
         ),
       ),

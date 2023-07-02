@@ -5,6 +5,15 @@ const sequelize = db.sequelize
 
 class Conteudo extends Model {}
 Conteudo.init({
+    nome: {
+        type: DataTypes.STRING
+    },
+    descricao: {
+        type: DataTypes.STRING
+    },
+    caminho: {
+        type: DataTypes.STRING
+    }
 }, {sequelize})
 
 module.exports = Conteudo
