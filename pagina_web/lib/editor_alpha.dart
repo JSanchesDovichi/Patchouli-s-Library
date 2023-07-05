@@ -1,67 +1,36 @@
-import 'dart:collection';
 import 'dart:js_interop';
-import 'dart:math';
 
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-//import 'package:pagina_web/editorsingleton.dart';
 import 'package:pagina_web/global_resources.dart';
-import 'ElementoTraducaoTeste.dart';
+import 'ElementoTraducaoTeste2.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 Uint8List? imagemBase;
-List<ElementoTeste> listaElementos = [];
+double? current_width;
+double? current_height;
+List<ElementoTeste2> listaElementos = [];
 List<Widget> camadas = [];
-List<Widget> elementosGraficos = [];
-int quantidadeCamadas = 0;
 //List<int> _items = List<int>.generate(0, (int index) => index);
 
-List<Widget> gerarElementosGraficos() {
-  List<Widget> lista = [];
+List<Widget> pilhaCamadas() {
+  List<Widget> camadas = [];
 
-  for (ElementoTeste elemento in listaElementos) {
-    lista.add(elemento.gerarElementoGrafico());
-  }
-
-  return lista;
-}
-
-/*
-List<Widget> pilhaCamadas(Function atualizarTela, BuildContext context) {
-  List<Widget> lista = [];
-
-  for (ElementoTeste elemento in listaElementos) {
-    Widget camadaCriada =
-        criarCamada(atualizarTela, context, listaElementos.indexOf(elemento));
-  }
-
-  //print(EditorResources().camadas.length);
-
-  /*
-  for (Widget camada in EditorResources().camadas) {
-    print(camada.key);
-  }
-  */
-
-  //print("---\n");
-
-  /*
-  for (ElementoTeste elemento in listaElementos) {
+  for (ElementoTeste2 elemento in listaElementos) {
     camadas.add(elemento.gerar());
   }
-  */
 
-  return EditorResources().camadas;
+  return camadas;
 }
-*/
 
-class Editor2 extends StatefulWidget {
-  const Editor2({super.key});
+class EditorAlpha extends StatefulWidget {
+  const EditorAlpha({super.key});
 
   @override
-  State<Editor2> createState() => _Editor2State();
+  State<EditorAlpha> createState() => _EditorAlphaState();
 }
 
 abrirSelecaoImagem(Function atualizarTela) async {
@@ -251,107 +220,166 @@ Widget abrirColorPicker(opcoesCores opcaoCor, textoTitulo, BuildContext context,
               break;
           }
 
+          gerarCamadas(atualizarTela, context);
+
           atualizarTela();
         }),
   );
 }
 
-Widget criarCamada(Function atualizarTela, BuildContext context, int newKey) {
-  //int newKey = camadas.length;
-  //print(newKey);
-  //ElementoTeste base = listaElementos[newKey];
-
-  Widget newTile = ExpansionTile(
-    key: Key(newKey.toString()),
-    title: Text(newKey.toString()),
-    children: [
-      Text("Texto: "),
-      TextFormField(
-        initialValue: listaElementos[newKey].texto,
-        onChanged: (value) {
-          //print(value);
-
-          listaElementos[newKey].texto = value;
-
-          elementosGraficos = gerarElementosGraficos();
-
-          atualizarTela();
-        },
-      ),
-      /*
-      Divider(),
-      Text("Posicionamento: "),
-      Text("Distância do topo: "),
-      TextFormField(
-        initialValue: base.posTop.toString(),
-        onChanged: (value) {
-          //listaElementos[index].texto = value;
-          base.posTop = double.tryParse(value)!;
-
-          atualizarTela();
-
-          /*
-            //print(value);
-
-            listaElementos[index].texto = value;
-
-            atualizarTela();
-            */
-        },
-      ),
-      Divider(),
-      Text("Distância da esquerda: "),
-      TextFormField(
-        initialValue: base.posLeft.toString(),
-        onChanged: (value) {
-          base.posLeft = double.tryParse(value)!;
-
-          atualizarTela();
-
-          /*
-            //print(value);
-
-            listaElementos[index].texto = value;
-
-            atualizarTela();
-            */
-        },
-      ),
-      Divider(),
-      Text("Tamanho da fonte: "),
-      TextFormField(
-        initialValue: base.fontSize.toString(),
-        onChanged: (value) {
-          base.fontSize = double.tryParse(value)!;
-
-          atualizarTela();
-        },
-      ),
-      Divider(),
-      abrirColorPicker(opcoesCores.COR_FONTE, 'Cor da fonte: ', context, newKey,
-          atualizarTela),
-      Divider(),
-      abrirColorPicker(opcoesCores.COR_FUNDO, 'Cor de fundo: ', context, newKey,
-          atualizarTela)
-          */
-    ],
-  );
-
-  return newTile;
-
-  //camadas.add(newTile);
-}
-
 /*
-List<Widget> gerarCamadas(Function atualizarTela, BuildContext context) {
-  List<Widget> lista = [];
+const List<String> fontesDisponiveis = <String>[
+  'Roboto',
+  'Segoe UI',
+  '.SF UI Display'
+];
+*/
 
+gerarCamadas(Function atualizarTela, BuildContext context) {
+  //List<Widget> lista = [];
+
+  camadas.clear();
+
+  //for (ElementoTeste2 elemento in listaElementos) {
+  for (int i = 0; i < listaElementos.length; i++) {
+    String dropdownValue = listaElementos[i].fontFamily;
+
+    //Color dialogSelectColor = Colors.black;
+
+    Widget tile = ExpansionTile(
+      //collapsedBackgroundColor: Colors.deepPurpleAccent,
+      //key: Key('$index'),
+      key: Key(listaElementos[i].editorKey.toString()),
+      title: Text(listaElementos[i].texto == "''"
+          ? i.toString()
+          : listaElementos[i].texto),
+
+      children: [
+        Text("Texto: "),
+        TextFormField(
+          textAlign: TextAlign.center,
+          initialValue: listaElementos[i].texto,
+          onChanged: (value) {
+            //print(value);
+
+            listaElementos[i].texto = value;
+
+            gerarCamadas(atualizarTela, context);
+
+            atualizarTela();
+          },
+        ),
+        Divider(),
+        Text("Posicionamento: "),
+        Text("Distância do topo: "),
+        TextFormField(
+          textAlign: TextAlign.center,
+          initialValue: listaElementos[i].posTop.toString(),
+          onChanged: (value) {
+            //listaElementos[index].texto = value;
+            listaElementos[i].posTop = double.tryParse(value)!;
+
+            gerarCamadas(atualizarTela, context);
+
+            atualizarTela();
+
+            /*
+            //print(value);
+
+            listaElementos[index].texto = value;
+
+            atualizarTela();
+            */
+          },
+        ),
+        Divider(),
+        Text("Distância da esquerda: "),
+        TextFormField(
+          textAlign: TextAlign.center,
+          initialValue: listaElementos[i].posLeft.toString(),
+          onChanged: (value) {
+            listaElementos[i].posLeft = double.tryParse(value)!;
+
+            gerarCamadas(atualizarTela, context);
+
+            atualizarTela();
+
+            /*
+            //print(value);
+
+            listaElementos[index].texto = value;
+
+            atualizarTela();
+            */
+          },
+        ),
+        Divider(),
+        Text("Tamanho da fonte: "),
+        TextFormField(
+          textAlign: TextAlign.center,
+          initialValue: listaElementos[i].fontSize.toString(),
+          onChanged: (value) {
+            listaElementos[i].fontSize = double.tryParse(value)!;
+
+            gerarCamadas(atualizarTela, context);
+
+            atualizarTela();
+          },
+        ),
+        Divider(),
+        abrirColorPicker(
+            opcoesCores.COR_FONTE, 'Cor da fonte: ', context, i, atualizarTela),
+        Divider(),
+        abrirColorPicker(
+            opcoesCores.COR_FUNDO, 'Cor de fundo: ', context, i, atualizarTela),
+        /*
+        Divider(),
+        DropdownButton<String>(
+          value: dropdownValue,
+          icon: const Icon(Icons.arrow_downward),
+          elevation: 16,
+          style: const TextStyle(color: Colors.deepPurple),
+          underline: Container(
+            height: 2,
+            color: Colors.deepPurpleAccent,
+          ),
+          onChanged: (String? value) {
+            // This is called when the user selects an item.
+
+            dropdownValue = value!;
+
+            atualizarTela();
+          },
+          items:
+              fontesDisponiveis2.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value, style: TextStyle(fontFamily: value)),
+            );
+          }).toList(),
+        )
+        */
+      ],
+    );
+    /*
+    Widget tile = ListTile(
+      key: Key('$index'),
+      title: Text(listaElementos[index].texto),
+    );
+    */
+
+    //lista.add(tile);
+    camadas.add(tile);
+  }
+
+  /*
   for (int index = 0; index < listaElementos.length; index++) {
     //Color dialogSelectColor = Colors.black;
 
     Widget tile = ExpansionTile(
       //collapsedBackgroundColor: Colors.deepPurpleAccent,
-      key: Key('$index'),
+      //key: Key('$index'),
+      key: Key(listaElementos[index].editorKey.toString()),
       title: Text(listaElementos[index].texto),
 
       children: [
@@ -431,12 +459,12 @@ List<Widget> gerarCamadas(Function atualizarTela, BuildContext context) {
 
     lista.add(tile);
   }
+  */
 
-  return lista.reversed.toList();
+  //return lista.reversed.toList();
 }
-*/
 
-class _Editor2State extends State<Editor2> {
+class _EditorAlphaState extends State<EditorAlpha> {
   bool estadoMenuEscondido = true;
 
   TransformationController _transformationController =
@@ -465,41 +493,6 @@ class _Editor2State extends State<Editor2> {
     atualizarTela() {
       //print("Existem ${pilhaEditor.length} elementos na pilha!");
       setState(() {});
-    }
-
-    //EditorResources().atualizarTela = atualizarTela();
-
-    void reorderData(int oldindex, int newindex) {
-      setState(() {
-        /*
-        if (newindex > oldindex && newindex >= listaElementos.length) {
-          newindex -= 1;
-
-          print("newindex: $newindex");
-        } else if (oldindex > newindex && oldindex >= listaElementos.length) {
-          oldindex -= 1;
-
-          print("oldindex: $oldindex");
-        }
-        */
-
-        if (newindex > oldindex) {
-          newindex -= 1;
-        }
-
-        final items = camadas.removeAt(oldindex);
-        camadas.insert(newindex, items);
-
-        final elemento = listaElementos.removeAt(oldindex);
-        listaElementos.insert(newindex, elemento);
-
-        elementosGraficos = gerarElementosGraficos();
-
-        /*
-        final elementoGrafico = elementosGraficos.removeAt(oldindex);
-        elementosGraficos.insert(newindex, elementoGrafico);
-        */
-      });
     }
 
     //camadas = gerarCamadas(atualizarTela);
@@ -548,9 +541,7 @@ class _Editor2State extends State<Editor2> {
                           //width: MediaQuery.sizeOf(context).longestSide,
                           fit: BoxFit.cover),
                       if (listaElementos.isDefinedAndNotNull)
-
-                        ///...gerarElementosGraficos().reversed
-                        ...elementosGraficos.reversed
+                        ...pilhaCamadas().reversed
                     ],
                   ),
                 )),
@@ -591,33 +582,48 @@ class _Editor2State extends State<Editor2> {
                                               abrirSelecaoImagem(atualizarTela);
 
                                               listaElementos = [];
+                                              camadas = [];
                                             },
                                             child:
                                                 Text("Escolher outra imagem")),
                                       ),
                                       Text("Zoom atual:\n${zoom}%"),
                                       ReorderableListView(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 5, horizontal: 2),
-                                          shrinkWrap: true,
-                                          header: Text(
-                                            "Camadas",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                fontFamily: 'Roboto',
-                                                fontSize: 25),
-                                          ),
-                                          //children: gerarCamadas(atualizarTela, context),
-                                          //children: gerarCamadas(atualizarTela),
-                                          onReorder: reorderData,
-                                          children: camadas
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 5, horizontal: 2),
+                                        shrinkWrap: true,
+                                        header: Text(
+                                          "Camadas",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontFamily: 'roboto',
+                                              fontSize: 25),
+                                        ),
+                                        children: camadas,
+                                        //children: gerarCamadas(atualizarTela),
+                                        onReorder:
+                                            (int oldIndex, int newIndex) {
+                                          setState(() {
+                                            if (oldIndex < newIndex) {
+                                              newIndex -= 1;
+                                            }
+                                            final ElementoTeste2 item =
+                                                listaElementos
+                                                    .removeAt(oldIndex);
+                                            listaElementos.insert(
+                                                newIndex, item);
 
-                                          /*
+                                            gerarCamadas(
+                                                atualizarTela, context);
+                                          });
+                                        },
+                                        /*
+                                            (int oldIndex, int newIndex) {
                                           if (oldIndex < newIndex) {
                                             newIndex -= 1;
                                           }
 
-                                          ElementoTeste itemTrocado1 =
+                                          ElementoTeste2 itemTrocado1 =
                                               listaElementos[oldIndex];
 
                                           listaElementos[oldIndex] =
@@ -625,10 +631,12 @@ class _Editor2State extends State<Editor2> {
                                           listaElementos[newIndex] =
                                               itemTrocado1;
 
+                                          gerarCamadas(atualizarTela, context);
+
                                           atualizarTela();
                                           */
 
-                                          /*
+                                        /*
                               setState(() {
                                 /*
                                 if (oldIndex < newIndex) {
@@ -644,82 +652,20 @@ class _Editor2State extends State<Editor2> {
                                 listaElementos[newIndex] = itemTrocado1;
                               });
                               */
-                                          ),
+                                      ),
                                       Padding(
                                         padding:
                                             EdgeInsets.symmetric(vertical: 5),
                                         child: FilledButton(
                                             onPressed: () {
-                                              ElementoTeste elementoNovo =
-                                                  ElementoTeste(
-                                                      (listaElementos.length)
-                                                          .toString(),
-                                                      350,
-                                                      350);
-
-                                              quantidadeCamadas += 1;
-
-                                              listaElementos.add(elementoNovo);
-
-                                              camadas.add(criarCamada(
-                                                  atualizarTela,
-                                                  context,
-                                                  camadas.length));
-
-                                              /*
-                                              elementosGraficos.add(elementoNovo
-                                                  .gerarElementoGrafico());
-                                                  */
-
-                                              elementosGraficos =
-                                                  gerarElementosGraficos();
-
-                                              atualizarTela();
-
-                                              /*
-                                              (
-                                                Widget elementoGrafico,
-                                                Widget camadaGerada
-                                              ) record = elementoNovo.gerar(
-                                                  EditorResources()
-                                                      .listaElementos
-                                                      .length,
-                                                  atualizarTela);
-                                                  */
-
-                                              /*
-                                              EditorResources()
-                                                  .listaElementos
-                                                  .add(ElementoTeste(
-                                                      EditorResources()
-                                                          .listaElementos
-                                                          .length
-                                                          .toString(),
-                                                      350,
-                                                      350));
-                                                      */
-
-/*
-                                              EditorResources()
-                                                  .elementosGraficos
-                                                  .add(record.$1);
-                                              EditorResources()
-                                                  .camadas
-                                                  .add(record.$2);
-                                                  */
-
-                                              /*
-                                              listaElementos.add(ElementoTeste(
-                                                  listaElementos.length
-                                                      .toString(),
+                                              listaElementos.add(ElementoTeste2(
+                                                  listaElementos.length,
+                                                  "''",
                                                   350,
                                                   350));
 
-                                              criarCamada(
-                                                  atualizarTela,
-                                                  context,
-                                                  listaElementos.length);
-                                                  */
+                                              gerarCamadas(
+                                                  atualizarTela, context);
 
                                               atualizarTela();
                                             },

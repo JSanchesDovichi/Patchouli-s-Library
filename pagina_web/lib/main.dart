@@ -6,6 +6,8 @@ import 'package:pagina_web/placeholder_content_local.dart';
 import 'package:pagina_web/test_requests.dart';
 import 'package:go_router/go_router.dart';
 
+import 'editor_alpha.dart';
+
 void main() {
   //runApp(const MyApp());
 
@@ -26,6 +28,7 @@ void main() {
         path: '/placeholder_content_local',
         builder: (context, state) => PlaceholderContentPageLocal(),
       ),
+      /*
       GoRoute(
         path: '/debug_editor2',
         builder: (context, state) => Editor2(),
@@ -33,6 +36,11 @@ void main() {
       GoRoute(
         path: '/debug_editor3',
         builder: (context, state) => Editor3(),
+      ),
+      */
+      GoRoute(
+        path: '/editor',
+        builder: (context, state) => EditorAlpha(),
       ),
     ],
   );
@@ -190,6 +198,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   context.go('/placeholder_content_local');
                 },
                 child: Text("Acessar conteúdo placeholder")),
+            /*
             FilledButton(
                 onPressed: () {
                   //logout();
@@ -202,6 +211,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   context.go('/debug_editor3');
                 },
                 child: Text("Acessar editor (debug3)")),
+                */
+            FilledButton(
+                onPressed: () {
+                  //logout();
+                  context.go('/editor');
+                },
+                child: Text("Acessar editor (alpha debug)")),
           ],
         ),
       ),

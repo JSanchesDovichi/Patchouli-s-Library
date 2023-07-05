@@ -7,11 +7,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/change_notifier.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pagina_web/editorsingleton.dart';
 import 'package:pagina_web/global_resources.dart';
 import 'ElementoTraducaoTeste.dart';
 
 Uint8List? imagemBase;
-List<ElementoTeste> listaElementos = [];
+List<Widget> listaElementos = [];
 
 class Editor3 extends StatefulWidget {
   const Editor3({super.key});
