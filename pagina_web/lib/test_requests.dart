@@ -1,4 +1,4 @@
-import 'dart:convert';
+//import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:pagina_web/global_resources.dart';
@@ -67,11 +67,11 @@ void tryLogin() async {
         await Resources.api.post('login/', data: formData, options: opcoes);
 
     //Resources.logger.i(resposta.data);
-    Map<String, dynamic> resposta_tok = resposta.data;
+    Map<String, dynamic> respostaTok = resposta.data;
 
     //print(resposta_tok['token']);
 
-    Resources.authKey = resposta_tok['token'];
+    Resources.authKey = respostaTok['token'];
 
     //print(resposta.data.token);
   } on DioError catch (e) {

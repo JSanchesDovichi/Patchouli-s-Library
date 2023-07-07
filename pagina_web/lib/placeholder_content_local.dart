@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:html';
+//import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,15 +14,15 @@ class PlaceholderContentPageLocal extends StatefulWidget {
 
 class _PlaceholderContentPageLocalState
     extends State<PlaceholderContentPageLocal> {
-  List<DropdownMenuItem<String>> linguas_disponiveis = [
-    DropdownMenuItem(
-      child: Text("portugues"),
+  List<DropdownMenuItem<String>> linguasDisponiveis = [
+    const DropdownMenuItem(
       value: "portugues",
+      child: Text("portugues"),
     ),
-    DropdownMenuItem(child: Text("ingles"), value: "ingles"),
+    const DropdownMenuItem(value: "ingles", child: Text("ingles")),
   ];
 
-  String lingua_selecionada = "portugues";
+  String linguaSelecionada = "portugues";
 
   bool templateEnabled = true;
   bool lingua = false;
@@ -33,7 +33,7 @@ class _PlaceholderContentPageLocalState
   Future<void> readJson() async {
     String response;
 
-    response = await rootBundle.loadString('traducao_$lingua_selecionada.json');
+    response = await rootBundle.loadString('traducao_$linguaSelecionada.json');
 
     final data = await json.decode(response);
     setState(() {
@@ -44,20 +44,20 @@ class _PlaceholderContentPageLocalState
   List<Widget> aplicarDialogos() {
     List<Widget> listaDialogos = [];
 
-    _items.forEach((dialogue) {
+    for (var dialogue in _items) {
       //print(dialogue["position"]);
       //listaDialogos.add(Text(dialogue["dialogue"]));
 
-      double position_top = dialogue["position"]["top"];
-      double position_left = dialogue["position"]["left"];
+      double positionTop = dialogue["position"]["top"];
+      double positionLeft = dialogue["position"]["left"];
 
       Widget dialogo = Positioned(
-          top: position_top,
-          left: position_left,
+          top: positionTop,
+          left: positionLeft,
           child: Text(dialogue["dialogue"]));
 
       listaDialogos.add(dialogo);
-    });
+    }
 
     return listaDialogos;
   }
@@ -73,11 +73,11 @@ class _PlaceholderContentPageLocalState
               child: Column(
                 //mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text("Debug page!"),
+                  const Text("Debug page!"),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Ativar template e tradução: "),
+                      const Text("Ativar template e tradução: "),
                       Switch(
                         value: templateEnabled,
                         onChanged: (bool newValue) {
@@ -92,13 +92,13 @@ class _PlaceholderContentPageLocalState
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Alterar língua da tradução: "),
+                            const Text("Alterar língua da tradução: "),
                             DropdownButton(
-                                value: lingua_selecionada,
-                                items: linguas_disponiveis,
+                                value: linguaSelecionada,
+                                items: linguasDisponiveis,
                                 onChanged: (newValue) {
                                   setState(() {
-                                    lingua_selecionada = newValue!;
+                                    linguaSelecionada = newValue!;
                                   });
                                 })
                             /*
@@ -113,7 +113,7 @@ class _PlaceholderContentPageLocalState
                             */
                           ],
                         )
-                      : Column(),
+                      : const Column(),
                   templateEnabled
                       ? Stack(
                           children: [

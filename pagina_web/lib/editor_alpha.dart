@@ -7,11 +7,10 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pagina_web/global_resources.dart';
 import 'ElementoTraducaoTeste2.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 Uint8List? imagemBase;
-double? current_width;
-double? current_height;
+double? currentWidth;
+double? currentHeight;
 List<ElementoTeste2> listaElementos = [];
 List<Widget> camadas = [];
 //List<int> _items = List<int>.generate(0, (int index) => index);
@@ -52,13 +51,13 @@ abrirSelecaoImagem(Function atualizarTela) async {
 
 Widget dialogoAlerta(BuildContext context, Function atualizarTela) {
   return AlertDialog(
-    title: Text("Boas vindas!", textAlign: TextAlign.center),
-    titleTextStyle: TextStyle(
+    title: const Text("Boas vindas!", textAlign: TextAlign.center),
+    titleTextStyle: const TextStyle(
         fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20),
-    shape: RoundedRectangleBorder(
+    shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(20))),
-    content: Text(
-        "Para iniciar o editor de template, escolha uma imagem do seu computador:",
+    content: const Text(
+        "Atenção! Este é um projeto que está em andamento e portanto, pode apresentar instabilidades e erros. O projeto possui código aberto para colaboração, e está disponível em https://github.com/JSanchesDovichi/Patchouli-s-Library\n\nPara iniciar o editor de template, escolha uma imagem do seu computador:",
         textAlign: TextAlign.center),
     actions: [
       Center(
@@ -69,7 +68,7 @@ Widget dialogoAlerta(BuildContext context, Function atualizarTela) {
                 onPressed: () {
                   context.go('/DebugToolbox');
                 },
-                child: Text("Voltar")),
+                child: const Text("Voltar")),
             FilledButton(
                 onPressed: () async {
                   abrirSelecaoImagem(atualizarTela);
@@ -94,7 +93,7 @@ Widget dialogoAlerta(BuildContext context, Function atualizarTela) {
                   atualizarTela();
                 },
                 */
-                child: Text("Escolher imagem")),
+                child: const Text("Escolher imagem")),
           ],
         ),
       )
@@ -121,9 +120,9 @@ final Map<ColorSwatch<Object>, String> colorsNameMap =
   ColorTools.createPrimarySwatch(blueBlues): 'Blue blues',
 };
 
-enum opcoesCores { COR_FONTE, COR_FUNDO }
+enum OpcoesCores { corFonte, corFundo }
 
-Widget abrirColorPicker(opcoesCores opcaoCor, textoTitulo, BuildContext context,
+Widget abrirColorPicker(OpcoesCores opcaoCor, textoTitulo, BuildContext context,
     int index, Function atualizarTela) {
   /*
   Color dialogSelectColor = listaElementos[index].corFonte.isDefinedAndNotNull
@@ -134,7 +133,7 @@ Widget abrirColorPicker(opcoesCores opcaoCor, textoTitulo, BuildContext context,
   Color? dialogSelectColor;
 
   switch (opcaoCor) {
-    case opcoesCores.COR_FONTE:
+    case OpcoesCores.corFonte:
       {
         dialogSelectColor = listaElementos[index].corFonte.isDefinedAndNotNull
             ? listaElementos[index].corFonte!
@@ -142,7 +141,7 @@ Widget abrirColorPicker(opcoesCores opcaoCor, textoTitulo, BuildContext context,
       }
       break;
 
-    case opcoesCores.COR_FUNDO:
+    case OpcoesCores.corFundo:
       {
         dialogSelectColor = listaElementos[index].corFundo.isDefinedAndNotNull
             ? listaElementos[index].corFundo!
@@ -207,13 +206,13 @@ Widget abrirColorPicker(opcoesCores opcaoCor, textoTitulo, BuildContext context,
 
           //listaElementos[index].corFonte = newColor;
           switch (opcaoCor) {
-            case opcoesCores.COR_FONTE:
+            case OpcoesCores.corFonte:
               {
                 listaElementos[index].corFonte = newColor;
               }
               break;
 
-            case opcoesCores.COR_FUNDO:
+            case OpcoesCores.corFundo:
               {
                 listaElementos[index].corFundo = newColor;
               }
@@ -242,7 +241,7 @@ gerarCamadas(Function atualizarTela, BuildContext context) {
 
   //for (ElementoTeste2 elemento in listaElementos) {
   for (int i = 0; i < listaElementos.length; i++) {
-    String dropdownValue = listaElementos[i].fontFamily;
+    //String dropdownValue = listaElementos[i].fontFamily;
 
     //Color dialogSelectColor = Colors.black;
 
@@ -255,7 +254,7 @@ gerarCamadas(Function atualizarTela, BuildContext context) {
           : listaElementos[i].texto),
 
       children: [
-        Text("Texto: "),
+        const Text("Texto: "),
         TextFormField(
           textAlign: TextAlign.center,
           initialValue: listaElementos[i].texto,
@@ -269,9 +268,9 @@ gerarCamadas(Function atualizarTela, BuildContext context) {
             atualizarTela();
           },
         ),
-        Divider(),
-        Text("Posicionamento: "),
-        Text("Distância do topo: "),
+        const Divider(),
+        const Text("Posicionamento: "),
+        const Text("Distância do topo: "),
         TextFormField(
           textAlign: TextAlign.center,
           initialValue: listaElementos[i].posTop.toString(),
@@ -292,8 +291,8 @@ gerarCamadas(Function atualizarTela, BuildContext context) {
             */
           },
         ),
-        Divider(),
-        Text("Distância da esquerda: "),
+        const Divider(),
+        const Text("Distância da esquerda: "),
         TextFormField(
           textAlign: TextAlign.center,
           initialValue: listaElementos[i].posLeft.toString(),
@@ -313,8 +312,8 @@ gerarCamadas(Function atualizarTela, BuildContext context) {
             */
           },
         ),
-        Divider(),
-        Text("Tamanho da fonte: "),
+        const Divider(),
+        const Text("Tamanho da fonte: "),
         TextFormField(
           textAlign: TextAlign.center,
           initialValue: listaElementos[i].fontSize.toString(),
@@ -326,12 +325,12 @@ gerarCamadas(Function atualizarTela, BuildContext context) {
             atualizarTela();
           },
         ),
-        Divider(),
+        const Divider(),
         abrirColorPicker(
-            opcoesCores.COR_FONTE, 'Cor da fonte: ', context, i, atualizarTela),
-        Divider(),
+            OpcoesCores.corFonte, 'Cor da fonte: ', context, i, atualizarTela),
+        const Divider(),
         abrirColorPicker(
-            opcoesCores.COR_FUNDO, 'Cor de fundo: ', context, i, atualizarTela),
+            OpcoesCores.corFundo, 'Cor de fundo: ', context, i, atualizarTela),
         /*
         Divider(),
         DropdownButton<String>(
@@ -467,7 +466,7 @@ gerarCamadas(Function atualizarTela, BuildContext context) {
 class _EditorAlphaState extends State<EditorAlpha> {
   bool estadoMenuEscondido = true;
 
-  TransformationController _transformationController =
+  final TransformationController _transformationController =
       TransformationController();
   double zoom = 1.0;
   //List<Widget> testItems = List<Widget>.generate(50, (index) => Text("Hello $index"));
@@ -497,9 +496,9 @@ class _EditorAlphaState extends State<EditorAlpha> {
 
     //camadas = gerarCamadas(atualizarTela);
 
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    final Color oddItemColor = colorScheme.primary.withOpacity(0.05);
-    final Color evenItemColor = colorScheme.primary.withOpacity(0.15);
+    //final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    //final Color oddItemColor = colorScheme.primary.withOpacity(0.05);
+    //final Color evenItemColor = colorScheme.primary.withOpacity(0.15);
 
     //dropdownWidgets();
     return MaterialApp(
@@ -548,7 +547,8 @@ class _EditorAlphaState extends State<EditorAlpha> {
               if (imagemBase.isDefinedAndNotNull) ...[
                 Padding(
                     //padding: EdgeInsets.zero,
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                     child: Row(children: [
                       estadoMenuEscondido == true
                           ? IconButton(
@@ -557,14 +557,15 @@ class _EditorAlphaState extends State<EditorAlpha> {
 
                                 atualizarTela();
                               },
-                              icon: Icon(Icons.arrow_circle_left_rounded))
+                              icon: const Icon(Icons.arrow_circle_left_rounded))
                           : IconButton(
                               onPressed: () {
                                 estadoMenuEscondido = !estadoMenuEscondido;
 
                                 atualizarTela();
                               },
-                              icon: Icon(Icons.arrow_circle_right_rounded)),
+                              icon:
+                                  const Icon(Icons.arrow_circle_right_rounded)),
                       estadoMenuEscondido
                           ? SizedBox(
                               width: MediaQuery.sizeOf(context).width / 5,
@@ -575,8 +576,8 @@ class _EditorAlphaState extends State<EditorAlpha> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 5),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5),
                                         child: FilledButton(
                                             onPressed: () async {
                                               abrirSelecaoImagem(atualizarTela);
@@ -584,15 +585,15 @@ class _EditorAlphaState extends State<EditorAlpha> {
                                               listaElementos = [];
                                               camadas = [];
                                             },
-                                            child:
-                                                Text("Escolher outra imagem")),
+                                            child: const Text(
+                                                "Escolher outra imagem")),
                                       ),
-                                      Text("Zoom atual:\n${zoom}%"),
+                                      Text("Zoom atual:\n$zoom%"),
                                       ReorderableListView(
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                             vertical: 5, horizontal: 2),
                                         shrinkWrap: true,
-                                        header: Text(
+                                        header: const Text(
                                           "Camadas",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
@@ -654,8 +655,8 @@ class _EditorAlphaState extends State<EditorAlpha> {
                               */
                                       ),
                                       Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 5),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5),
                                         child: FilledButton(
                                             onPressed: () {
                                               listaElementos.add(ElementoTeste2(
@@ -669,13 +670,13 @@ class _EditorAlphaState extends State<EditorAlpha> {
 
                                               atualizarTela();
                                             },
-                                            child:
-                                                Text("Criar elemento novo!")),
+                                            child: const Text(
+                                                "Criar elemento novo!")),
                                       )
                                     ]),
                               )),
                             )
-                          : Text("Menu")
+                          : const Text("Menu")
                     ]))
               ]
             ],

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pagina_web/editor.dart';
-import 'package:pagina_web/editor2.dart';
-import 'package:pagina_web/editor3.dart';
-import 'package:pagina_web/placeholder_content_local.dart';
+//import 'package:pagina_web/editor.dart';
+//import 'package:pagina_web/editor2.dart';
+//import 'package:pagina_web/editor3.dart';
+//import 'package:pagina_web/placeholder_content_local.dart';
 import 'package:pagina_web/test_requests.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,8 +12,9 @@ void main() {
   //runApp(const MyApp());
 
   // GoRouter configuration
-  final _router = GoRouter(
+  final router = GoRouter(
     routes: [
+      /*
       GoRoute(
         path: '/',
         builder: (context, state) => FilledButton(
@@ -28,25 +29,16 @@ void main() {
         path: '/placeholder_content_local',
         builder: (context, state) => PlaceholderContentPageLocal(),
       ),
-      /*
-      GoRoute(
-        path: '/debug_editor2',
-        builder: (context, state) => Editor2(),
-      ),
-      GoRoute(
-        path: '/debug_editor3',
-        builder: (context, state) => Editor3(),
-      ),
       */
       GoRoute(
-        path: '/editor',
-        builder: (context, state) => EditorAlpha(),
+        path: '/',
+        builder: (context, state) => const EditorAlpha(),
       ),
     ],
   );
 
   runApp(MaterialApp.router(
-    routerConfig: _router,
+    routerConfig: router,
   ));
 }
 
@@ -155,8 +147,8 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text("Debug:"),
-            Divider(),
+            const Text("Debug:"),
+            const Divider(),
             const Text(
               'You have pushed the button this many times:',
             ),
@@ -168,36 +160,36 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   getHttp();
                 },
-                child: Text("Tentar chamar a API")),
-            Text("Autenticação:"),
-            Divider(),
+                child: const Text("Tentar chamar a API")),
+            const Text("Autenticação:"),
+            const Divider(),
             FilledButton(
                 onPressed: () {
                   areaProibida();
                 },
-                child: Text("Tentar acessar página proibida")),
+                child: const Text("Tentar acessar página proibida")),
             FilledButton(
                 onPressed: () {
                   criarUsuario();
                 },
-                child: Text("Criar usuário teste")),
+                child: const Text("Criar usuário teste")),
             FilledButton(
                 onPressed: () {
                   tryLogin();
                 },
-                child: Text("Executar Login")),
+                child: const Text("Executar Login")),
             FilledButton(
                 onPressed: () {
                   logout();
                 },
-                child: Text("Logout")),
-            Divider(),
+                child: const Text("Logout")),
+            const Divider(),
             FilledButton(
                 onPressed: () {
                   //logout();
                   context.go('/placeholder_content_local');
                 },
-                child: Text("Acessar conteúdo placeholder")),
+                child: const Text("Acessar conteúdo placeholder")),
             /*
             FilledButton(
                 onPressed: () {
@@ -217,7 +209,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   //logout();
                   context.go('/editor');
                 },
-                child: Text("Acessar editor (alpha debug)")),
+                child: const Text("Acessar editor (alpha debug)")),
           ],
         ),
       ),
