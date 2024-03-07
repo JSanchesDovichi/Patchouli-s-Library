@@ -10,8 +10,18 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "debug",
-            "deviceId": "chrome",
-            "args": ["--web-renderer=html"]
+
+            "env": {
+                "CHROME_EXECUTABLE": "/usr/bin/chromium"
+            },
+
+            "args": [
+                "-d",
+                "chrome",
+                "--web-renderer=html"
+                //"--dart-define-from-file",
+                //"prod_env.json"
+              ]
         },
         {
             "name": "pagina_web (profile mode)",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pagina_web/placeholder_content_local.dart';
 //import 'package:pagina_web/editor.dart';
 //import 'package:pagina_web/editor2.dart';
 //import 'package:pagina_web/editor3.dart';
@@ -14,7 +15,6 @@ void main() {
   // GoRouter configuration
   final router = GoRouter(
     routes: [
-      /*
       GoRoute(
         path: '/',
         builder: (context, state) => FilledButton(
@@ -29,9 +29,8 @@ void main() {
         path: '/placeholder_content_local',
         builder: (context, state) => PlaceholderContentPageLocal(),
       ),
-      */
       GoRoute(
-        path: '/',
+        path: '/editor',
         builder: (context, state) => const EditorAlpha(),
       ),
     ],

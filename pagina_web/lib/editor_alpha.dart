@@ -37,12 +37,12 @@ abrirSelecaoImagem(Function atualizarTela) async {
 
   XFile? imagem = await picker.pickImage(source: ImageSource.gallery);
 
-  if (imagem.isNull) {
+  if (imagem == null) {
     Resources.logger.e("Erro: a imagem está nula!");
     return;
   }
 
-  Uint8List bytesImagem = await imagem!.readAsBytes();
+  Uint8List bytesImagem = await imagem.readAsBytes();
 
   imagemBase = bytesImagem;
 
@@ -132,6 +132,9 @@ Widget abrirColorPicker(OpcoesCores opcaoCor, textoTitulo, BuildContext context,
 
   Color? dialogSelectColor;
 
+//TODO: CONSERTAR?
+  dialogSelectColor = Colors.black;
+/*
   switch (opcaoCor) {
     case OpcoesCores.corFonte:
       {
@@ -149,6 +152,7 @@ Widget abrirColorPicker(OpcoesCores opcaoCor, textoTitulo, BuildContext context,
       }
       break;
   }
+  */
 
   return ListTile(
     //title: const Text('Click to select a new color from a dialog'),
@@ -501,6 +505,7 @@ class _EditorAlphaState extends State<EditorAlpha> {
     //final Color evenItemColor = colorScheme.primary.withOpacity(0.15);
 
     //dropdownWidgets();
+
     return MaterialApp(
         theme: ThemeData(
             //fixTextFieldOutlineLabel: true,
@@ -511,11 +516,18 @@ class _EditorAlphaState extends State<EditorAlpha> {
         home: Scaffold(
           body: Stack(
             children: [
-              if (listaElementos.isEmpty && imagemBase.isNull)
+              //if (listaElementos.isEmpty && imagemBase.isNull)
+              //TODO: Consertar
+
+              if (listaElementos.isEmpty && imagemBase == null)
                 Center(
                   child: dialogoAlerta(context, atualizarTela),
                 ),
-              if (imagemBase.isDefinedAndNotNull)
+
+              //TODO: Consertar
+
+              if (imagemBase != null)
+                //if (imagemBase.isDefinedAndNotNull)
                 Center(
                     child: InteractiveViewer(
                   clipBehavior: Clip.none,
@@ -539,12 +551,16 @@ class _EditorAlphaState extends State<EditorAlpha> {
                           //height: MediaQuery.sizeOf(context).height,
                           //width: MediaQuery.sizeOf(context).longestSide,
                           fit: BoxFit.cover),
-                      if (listaElementos.isDefinedAndNotNull)
-                        ...pilhaCamadas().reversed
+                      //TODO: Consertar
+                      //if (listaElementos.isDefinedAndNotNull)
+                      if (listaElementos.isNotEmpty) ...pilhaCamadas().reversed
                     ],
                   ),
                 )),
-              if (imagemBase.isDefinedAndNotNull) ...[
+
+              //TODO: Consertar
+              if (imagemBase != null) ...[
+                //if (imagemBase.isDefinedAndNotNull) ...[
                 Padding(
                     //padding: EdgeInsets.zero,
                     padding:

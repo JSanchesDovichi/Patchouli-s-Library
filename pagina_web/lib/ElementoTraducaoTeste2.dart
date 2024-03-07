@@ -24,10 +24,12 @@ class ElementoTeste2 {
         texto,
         style: TextStyle(
             fontFamily: fontFamily,
-            fontSize: fontSize.isDefinedAndNotNull ? fontSize : 14,
-            color: corFonte.isDefinedAndNotNull ? corFonte : Colors.black,
-            backgroundColor:
-                corFonte.isDefinedAndNotNull ? corFundo : Colors.white),
+            fontSize: fontSize,
+            //fontSize: fontSize!.isDefinedAndNotNull ? fontSize : 14,
+            //color: corFonte.isDefinedAndNotNull ? corFonte : Colors.black,
+            color: corFonte,
+            //backgroundColor: corFonte.isDefinedAndNotNull ? corFundo : Colors.white),
+            backgroundColor: corFundo),
         //)
       ),
     );
@@ -42,10 +44,14 @@ class ElementoTeste2 {
           Text(
         texto,
         style: TextStyle(
+            /*
             fontSize: fontSize.isDefinedAndNotNull ? fontSize : 14,
             color: corFonte.isDefinedAndNotNull ? corFonte : Colors.black,
-            backgroundColor:
-                corFonte.isDefinedAndNotNull ? corFundo : Colors.white),
+            backgroundColor: corFonte.isDefinedAndNotNull ? corFundo : Colors.white),
+            */
+            fontSize: fontSize,
+            color: corFonte,
+            backgroundColor: corFundo),
         //)
       ),
     );
