@@ -9,10 +9,14 @@ import 'package:pagina_web/global_resources.dart';
 import 'ElementoTraducaoTeste2.dart';
 
 Uint8List? imagemBase;
+Image? base;
 double? currentWidth;
 double? currentHeight;
 List<ElementoTeste2> listaElementos = [];
 List<Widget> camadas = [];
+double _currentSliderValue = 20;
+double? maximumWidth;
+double? maximumHeight;
 //List<int> _items = List<int>.generate(0, (int index) => index);
 
 List<Widget> pilhaCamadas() {
@@ -45,6 +49,12 @@ abrirSelecaoImagem(Function atualizarTela) async {
   Uint8List bytesImagem = await imagem.readAsBytes();
 
   imagemBase = bytesImagem;
+  base = Image.memory(imagemBase!, fit: BoxFit.cover);
+
+  if (base != null) {
+    maximumWidth = base!.width;
+    maximumHeight = base!.height;
+  }
 
   atualizarTela();
 }
@@ -292,6 +302,23 @@ gerarCamadas(Function atualizarTela, BuildContext context) {
             listaElementos[index].texto = value;
 
             atualizarTela();
+            */
+          },
+        ),
+        const Divider(),
+        Slider(
+          value: _currentSliderValue,
+          max: maximumWidth != null ? maximumWidth! : 50,
+          divisions: 5,
+          label: _currentSliderValue.round().toString(),
+          onChanged: (double value) {
+            _currentSliderValue = value;
+            gerarCamadas(atualizarTela, context);
+            atualizarTela();
+            /*
+            setState(() {
+              _currentSliderValue = value;
+            });
             */
           },
         ),
@@ -547,10 +574,13 @@ class _EditorAlphaState extends State<EditorAlpha> {
                   },
                   child: Stack(
                     children: [
+                      /*
                       Image.memory(imagemBase!,
                           //height: MediaQuery.sizeOf(context).height,
                           //width: MediaQuery.sizeOf(context).longestSide,
                           fit: BoxFit.cover),
+                          */
+                      base!,
                       //TODO: Consertar
                       //if (listaElementos.isDefinedAndNotNull)
                       if (listaElementos.isNotEmpty) ...pilhaCamadas().reversed

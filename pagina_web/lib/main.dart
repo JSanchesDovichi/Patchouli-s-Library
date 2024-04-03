@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pagina_web/gamma/editor_gamma.dart';
 import 'package:pagina_web/placeholder_content_local.dart';
 //import 'package:pagina_web/editor.dart';
 //import 'package:pagina_web/editor2.dart';
@@ -32,6 +33,10 @@ void main() {
       GoRoute(
         path: '/editor',
         builder: (context, state) => const EditorAlpha(),
+      ),
+      GoRoute(
+        path: '/editor_gamma',
+        builder: (context, state) => const EditorGamma(),
       ),
     ],
   );
@@ -209,6 +214,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   context.go('/editor');
                 },
                 child: const Text("Acessar editor (alpha debug)")),
+            FilledButton(
+                onPressed: () {
+                  //logout();
+                  context.go('/editor_gamma');
+                },
+                child: const Text("Acessar editor (gamma)")),
           ],
         ),
       ),
