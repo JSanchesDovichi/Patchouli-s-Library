@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pagina_web/gamma/ImageCanvas.dart' as LocalCanvas;
 //import 'package:pagina_web/gamma/canvas.dart';
+import 'package:matrix_gesture_detector/matrix_gesture_detector.dart';
+
+const double pi = 3.1415926535897932;
 
 double canvasScale = 1;
 double minScale = 0.01;
@@ -32,9 +35,10 @@ class _EditorGammaState extends State<EditorGamma> {
   Widget build(BuildContext context) {
     Matrix4 canvasMatrix =
         Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, canvasScale)
-          ..rotateX(x)
-          ..rotateY(y)
-          ..rotateZ(z);
+          //..rotateX(x)
+          ..rotateX(x);
+    //..rotateY(y)
+    //..rotateZ(z);
 
     LocalCanvas.TransformationController canvasController =
         LocalCanvas.TransformationController()..value = canvasMatrix;
@@ -69,8 +73,8 @@ class _EditorGammaState extends State<EditorGamma> {
                     label: Text("minus")),
                 Slider(
                     thumbColor: Colors.white,
-                    max: 360,
-                    min: -360,
+                    max: 2 * pi,
+                    min: 0,
                     divisions: 1000000,
                     value: z,
                     onChanged: (newValue) {
@@ -104,6 +108,7 @@ class _EditorGammaState extends State<EditorGamma> {
                     //fit: BoxFit.fill,
                   ),
                 ))
+
             /*
               Transform(
                   child: Image.network(

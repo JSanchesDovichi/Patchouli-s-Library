@@ -37,6 +37,7 @@ dependencies:
   flex_color_picker: ^3.2.2
   google_fonts: ^5.1.0
   flutter_easy_drag: ^0.0.1
+  matrix_gesture_detector: ^0.2.0-nullsafety.1
 
   flutter:
     sdk: flutter
